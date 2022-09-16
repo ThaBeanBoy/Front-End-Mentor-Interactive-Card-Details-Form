@@ -1,0 +1,5 @@
+# TODO LIST
+<> Fix the height issue witht the body
+<> Fix the gradient color
+
+<> Display errors for invalid inputs - Use JS and show errors after the user tries submiting

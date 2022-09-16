@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap');
 
 /* Primary */
+$Colour-Purple: hsl(249, 99%, 64%);
+$Colour-Dark-Purple: hsl(278, 94%, 30%);
 $Colour-Linear-gradient: linear-gradient(
-  hsl(249, 99%, 64%),
-  hsl(278, 94%, 30%)
+  $Colour-Purple,
+  $Colour-Dark-Purple
 ); /* (active input border)*/
 $Colour-Red: hsl(0, 100%, 66%); /*input errors*/
 /* Neutral */
@@ -11,6 +13,10 @@ $Colour-White: hsl(0, 0%, 100%);
 $Colour-Light-grayish-violet: hsl(270, 3%, 87%);
 $Colour-Dark-grayish-violet: hsl(279, 6%, 55%);
 $Colour-Very-dark-violet: hsl(278, 68%, 11%);
+
+$border-radius: 7px;
+
+$Font: 'Space Grotesk', sans-serif;
 
 * {
   padding: 0;
@@ -28,8 +34,9 @@ body {
   align-items: center;
 
   font-size: 18px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: $Font;
   font-weight: 500;
+  color: $Colour-Very-dark-violet;
 
   .left {
     position: relative;
@@ -87,24 +94,88 @@ body {
     }
   }
 
-  form {
-    position: relative;
+  .right {
     flex: 1;
     height: 100vh;
 
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+    form {
+      position: relative;
+      max-width: 380px;
 
+      .field {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 28px;
+
+        label {
+          color: $Colour-Dark-Purple;
+        }
+
+        input {
+          margin: 12px 0px;
+          width: 100%;
+          padding: 14px;
+
+          border-radius: $border-radius;
+          border: solid $Colour-Dark-grayish-violet 1px;
+
+          color: $Colour-Very-dark-violet;
+          font-family: $Font;
+
+          &:focus {
+            border-color: $Colour-Linear-gradient;
+            outline: none;
+          }
+
+          &:placeholder-shown {
+            color: $Colour-Dark-grayish-violet;
+          }
+        }
+
+        .double-input {
+          display: flex;
+
+          input:first-of-type {
+            margin-right: 10px;
+          }
+        }
+
+        .input-err {
+          color: $Colour-Red;
+          font-size: 12px;
+          letter-spacing: 1px;
+          display: none;
+        }
+      }
+
+      .extra-numbers {
+        display: flex;
+
+        .field:first-of-type {
+          margin-right: 20px;
+        }
+      }
+
+      button {
+        padding: 16px 0px;
+        width: 100%;
+        border-radius: $border-radius;
+        border: none;
+        cursor: pointer;
+        background-color: $Colour-Very-dark-violet;
+
+        font-family: $Font;
+        font-size: 18px;
+        color: $Colour-White;
+      }
+    }
     .attribution {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-
+      margin-top: 28px;
       font-size: 11px;
-      text-align: center;
 
       a {
         color: $Colour-Red;
