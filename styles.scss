@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap');
+
+/* Primary */
+$Colour-Linear-gradient: linear-gradient(
+  hsl(249, 99%, 64%),
+  hsl(278, 94%, 30%)
+); /* (active input border)*/
+$Colour-Red: hsl(0, 100%, 66%); /*input errors*/
+/* Neutral */
+$Colour-White: hsl(0, 0%, 100%);
+$Colour-Light-grayish-violet: hsl(270, 3%, 87%);
+$Colour-Dark-grayish-violet: hsl(279, 6%, 55%);
+$Colour-Very-dark-violet: hsl(278, 68%, 11%);
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  /* max-width: 1200px; */
+  min-height: 100vh;
+  background-color: $Colour-White;
+
+  display: flex;
+  align-items: center;
+
+  font-size: 18px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+
+  .left {
+    position: relative;
+    height: 100vh;
+
+    #left-bg {
+      height: 100%;
+    }
+
+    .dummy-card {
+      position: absolute;
+      color: $Colour-White;
+    }
+
+    #card-front {
+      top: 187px;
+      left: 164px;
+
+      .card-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+        padding: 28px 32px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        h5 {
+          font-size: 28px;
+          letter-spacing: 3px;
+          margin-bottom: 32px;
+        }
+
+        .bottom-of-card {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+
+          p {
+            letter-spacing: 2px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    #card-back {
+      top: 469px;
+      left: 258px;
+    }
+  }
+
+  form {
+    position: relative;
+    flex: 1;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .attribution {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      font-size: 11px;
+      text-align: center;
+
+      a {
+        color: $Colour-Red;
+      }
+    }
+  }
+}

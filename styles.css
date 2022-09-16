@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap");
+/* Primary */
+/* (active input border)*/
+/*input errors*/
+/* Neutral */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  /* max-width: 1200px; */
+  min-height: 100vh;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+}
+
+body .left {
+  position: relative;
+  height: 100vh;
+}
+
+body .left #left-bg {
+  height: 100%;
+}
+
+body .left .dummy-card {
+  position: absolute;
+  color: white;
+}
+
+body .left #card-front {
+  top: 187px;
+  left: 164px;
+}
+
+body .left #card-front .card-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+body .left #card-front .card-container h5 {
+  font-size: 28px;
+  letter-spacing: 3px;
+  margin-bottom: 32px;
+}
+
+body .left #card-front .card-container .bottom-of-card {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+body .left #card-front .card-container .bottom-of-card p {
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+
+body .left #card-back {
+  top: 469px;
+  left: 258px;
+}
+
+body form {
+  position: relative;
+  flex: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+body form .attribution {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  text-align: center;
+}
+
+body form .attribution a {
+  color: #ff5252;
+}
