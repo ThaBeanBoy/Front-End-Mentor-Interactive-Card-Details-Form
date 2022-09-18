@@ -11,7 +11,6 @@
 
 body {
   width: 100vw;
-  /* max-width: 1200px; */
   min-height: 100vh;
   background-color: white;
   display: flex;
@@ -34,6 +33,12 @@ body .left #left-bg {
 body .left .dummy-card {
   position: absolute;
   color: white;
+}
+
+@media screen and (max-width: 1105px) {
+  body .left .dummy-card {
+    left: 164px !important;
+  }
 }
 
 body .left #card-front {
@@ -76,12 +81,37 @@ body .left #card-back {
   left: 258px;
 }
 
+body .left #left-bg-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  body .left {
+    width: 100vw;
+    height: auto;
+  }
+  body .left #left-bg {
+    display: none;
+  }
+  body .left #left-bg-mobile {
+    display: block;
+    width: 100%;
+  }
+  body .left .dummy-card {
+    top: 0;
+  }
+  body .left #card-front {
+    bottom: 0;
+  }
+}
+
 body .right {
   flex: 1;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 body .right form {
@@ -154,6 +184,21 @@ body .right form button {
   color: white;
 }
 
+@media screen and (max-width: 1345px) {
+  body .right form {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 250px;
+  }
+}
+
+@media screen and (max-width: 1105px) {
+  body .right form {
+    left: 163px;
+  }
+}
+
 body .right .attribution {
   margin-top: 28px;
   font-size: 11px;
@@ -161,4 +206,11 @@ body .right .attribution {
 
 body .right .attribution a {
   color: #ff5252;
+}
+
+@media screen and (max-width: 1024px) {
+  body {
+    flex-direction: column;
+    align-items: center;
+  }
 }

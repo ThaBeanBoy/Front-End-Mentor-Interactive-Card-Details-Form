@@ -24,9 +24,12 @@ $Font: 'Space Grotesk', sans-serif;
   box-sizing: border-box;
 }
 
+$screen-1345: 1345px;
+$screen-1105: 1105px;
+$screen-mobile: 1008px+16px;
+
 body {
   width: 100vw;
-  /* max-width: 1200px; */
   min-height: 100vh;
   background-color: $Colour-White;
 
@@ -49,6 +52,10 @@ body {
     .dummy-card {
       position: absolute;
       color: $Colour-White;
+
+      @media screen and (max-width: $screen-1105) {
+        left: 164px !important;
+      }
     }
 
     #card-front {
@@ -92,6 +99,32 @@ body {
       top: 469px;
       left: 258px;
     }
+
+    #left-bg-mobile {
+      display: none;
+    }
+
+    @media screen and (max-width: $screen-mobile) {
+      width: 100vw;
+      height: auto;
+
+      #left-bg {
+        display: none;
+      }
+
+      #left-bg-mobile {
+        display: block;
+        width: 100%;
+      }
+
+      .dummy-card {
+        top: 0;
+      }
+
+      #card-front {
+        bottom: 0;
+      }
+    }
   }
 
   .right {
@@ -101,6 +134,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    position: relative;
+
     form {
       position: relative;
       max-width: 380px;
@@ -172,6 +208,17 @@ body {
         font-size: 18px;
         color: $Colour-White;
       }
+
+      @media screen and (max-width: $screen-1345) {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 250px;
+      }
+
+      @media screen and (max-width: $screen-1105) {
+        left: 163px;
+      }
     }
     .attribution {
       margin-top: 28px;
@@ -181,5 +228,10 @@ body {
         color: $Colour-Red;
       }
     }
+  }
+
+  @media screen and (max-width: $screen-mobile) {
+    flex-direction: column;
+    align-items: center;
   }
 }
