@@ -15,6 +15,8 @@ $Colour-Dark-grayish-violet: hsl(279, 6%, 55%);
 $Colour-Very-dark-violet: hsl(278, 68%, 11%);
 
 $border-radius: 7px;
+$card-spacing: 164px;
+$card-overflow-height: 44px;
 
 $Font: 'Space Grotesk', sans-serif;
 
@@ -24,9 +26,8 @@ $Font: 'Space Grotesk', sans-serif;
   box-sizing: border-box;
 }
 
-$screen-1345: 1345px;
+$screen-1412: 1412px;
 $screen-1105: 1105px;
-$screen-mobile: 1008px+16px;
 
 body {
   width: 100vw;
@@ -52,15 +53,11 @@ body {
     .dummy-card {
       position: absolute;
       color: $Colour-White;
-
-      @media screen and (max-width: $screen-1105) {
-        left: 164px !important;
-      }
     }
 
     #card-front {
       top: 187px;
-      left: 164px;
+      left: $card-spacing;
 
       .card-container {
         position: absolute;
@@ -104,42 +101,27 @@ body {
       display: none;
     }
 
-    @media screen and (max-width: $screen-mobile) {
-      width: 100vw;
-      height: auto;
-
-      #left-bg {
-        display: none;
-      }
-
-      #left-bg-mobile {
-        display: block;
-        width: 100%;
-      }
-
-      .dummy-card {
-        top: 0;
-      }
-
-      #card-front {
-        bottom: 0;
-      }
-    }
+    // @media screen and (max-width: $screen-mobile) {
   }
 
   .right {
     flex: 1;
     height: 100vh;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
 
     position: relative;
 
     form {
       position: relative;
       max-width: 380px;
+
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: $card-spacing;
 
       .field {
         width: 100%;
@@ -208,17 +190,6 @@ body {
         font-size: 18px;
         color: $Colour-White;
       }
-
-      @media screen and (max-width: $screen-1345) {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 250px;
-      }
-
-      @media screen and (max-width: $screen-1105) {
-        left: 163px;
-      }
     }
     .attribution {
       margin-top: 28px;
@@ -230,8 +201,99 @@ body {
     }
   }
 
-  @media screen and (max-width: $screen-mobile) {
+  @media screen and(min-width: 933px) and (max-width: 1260px) {
+    .left {
+      .dummy-card {
+        left: 463px - 420px !important;
+        // left: clamp(16px, 11.38vw, 164px);
+      }
+    }
+
+    .right {
+      form {
+        right: 463px - 420px !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: 933px) {
     flex-direction: column;
     align-items: center;
+
+    .left {
+      width: 100vw;
+      height: auto;
+
+      #left-bg {
+        display: none;
+      }
+
+      #left-bg-mobile {
+        display: block;
+        width: 100%;
+      }
+
+      .dummy-card {
+        width: 286px;
+        img:not(#card-logo) {
+          width: 100%;
+        }
+      }
+
+      $card-offset: 56px;
+
+      #card-front {
+        top: auto;
+        bottom: -$card-overflow-height;
+        left: 16px;
+        // transform: translateX(-50%);
+        // transform: translateX(-50%);
+        height: auto;
+        z-index: 1;
+
+        .card-container {
+          padding: 18px;
+          height: 157px;
+
+          #card-logo {
+            width: 56px;
+          }
+
+          h5 {
+            font-size: 18px;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+          }
+
+          .bottom-of-card p {
+            font-size: 10px !important;
+          }
+        }
+      }
+
+      #card-back {
+        left: auto;
+        right: 16px;
+        bottom: 52px;
+        top: auto;
+      }
+    }
+
+    .right {
+      flex: none;
+      height: auto;
+      margin-top: $card-overflow-height + 48px;
+
+      form {
+        padding: 0 16px;
+        width: 100%;
+        position: static;
+        transform: none;
+
+        .field label {
+          font-size: 12px;
+        }
+      }
+    }
   }
 }

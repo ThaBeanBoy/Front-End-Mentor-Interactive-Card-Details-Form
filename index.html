@@ -34,7 +34,7 @@
         <img src="./images/bg-card-front.png" alt="card-front" />
 
         <div class="card-container">
-          <img src="./images/card-logo.svg" alt="card-logo" />
+          <img id="card-logo" src="./images/card-logo.svg" alt="card-logo" />
           <div class="card-details">
             <h5>0000 0000 0000 0000</h5>
             <div class="bottom-of-card">
@@ -64,7 +64,7 @@
         <div class="field">
           <label for="card-number">Card Number</label>
           <input
-            type="number"
+            type="text"
             name="card-number"
             placeholder="e.g. 1234 5678 9123 0000"
           />
@@ -75,15 +75,15 @@
           <div class="field">
             <label for="card-details">Exp. Date (MM/YY)</label>
             <div class="double-input">
-              <input type="number" name="card-month" placeholder="MM" />
-              <input type="number" name="card-year" placeholder="YY" />
+              <input type="text" name="card-month" placeholder="MM" />
+              <input type="text" name="card-year" placeholder="YY" />
             </div>
             <p class="input-err">Can't be blank</p>
           </div>
 
           <div class="field">
             <label for="CVC">CVC</label>
-            <input type="number" name="CVC" placeholder="e.g. 123" />
+            <input type="text" name="CVC" placeholder="e.g. 123" />
             <p class="input-err">Can't be blank</p>
           </div>
         </div>
