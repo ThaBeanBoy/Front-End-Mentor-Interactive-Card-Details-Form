@@ -110,13 +110,13 @@ body .right form .field input {
   width: 100%;
   padding: 14px;
   border-radius: 7px;
-  border: solid #8e8593 1px;
+  border: solid #8e8593 2px;
   color: #21092f;
   font-family: "Space Grotesk", sans-serif;
 }
 
 body .right form .field input:focus {
-  border-color: linear-gradient(#6448fe, #600594);
+  border-color: #600594;
   outline: none;
 }
 
@@ -137,6 +137,10 @@ body .right form .field .input-err {
   font-size: 12px;
   letter-spacing: 1px;
   display: none;
+}
+
+body .right form .field[data-err] .input-err {
+  display: block;
 }
 
 body .right form .extra-numbers {

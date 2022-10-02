@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- Completed state start -->
+
     <div class="left">
       <img
         id="left-bg"
@@ -55,41 +57,41 @@
     </div>
 
     <div class="right">
-      <form action="">
-        <div class="field">
+      <form name="transaction-form" action="">
+        <div class="field" data-field-for="card-holder-name">
           <label for="name">Cardholder Name</label>
           <input name="name" type="text" placeholder="e.g. Jane Appleseed" />
-          <p class="input-err">err</p>
+          <p class="input-err"></p>
         </div>
 
-        <div class="field">
+        <div class="field" data-field-for="card-number">
           <label for="card-number">Card Number</label>
           <input
             type="text"
             name="card-number"
             placeholder="e.g. 1234 5678 9123 0000"
           />
-          <p class="input-err">Wrong format, numbers only</p>
+          <p class="input-err"></p>
         </div>
 
         <div class="extra-numbers">
-          <div class="field">
+          <div class="field" data-field-for="exp-date">
             <label for="card-details">Exp. Date (MM/YY)</label>
             <div class="double-input">
               <input type="text" name="card-month" placeholder="MM" />
               <input type="text" name="card-year" placeholder="YY" />
             </div>
-            <p class="input-err">Can't be blank</p>
+            <p class="input-err"></p>
           </div>
 
-          <div class="field">
+          <div class="field" data-field-for="cvc">
             <label for="CVC">CVC</label>
             <input type="text" name="CVC" placeholder="e.g. 123" />
-            <p class="input-err">Can't be blank</p>
+            <p class="input-err"></p>
           </div>
         </div>
 
-        <button>Confirm</button>
+        <button id="confirm-btn">Confirm</button>
 
         <div class="attribution">
           Challenge by
@@ -100,8 +102,93 @@
       </form>
     </div>
 
-    <!-- Completed state start -->
-
     <!-- Thank you! We've added your card details Continue -->
+
+    <script>
+      const fieldElements = (fieldName) => {
+        // const field = document.querySelector(fieldName);
+        const field = document.querySelector(`[data-field-for="${fieldName}"]`);
+
+        return {
+          field: field,
+          inputs: field.getElementsByTagName('input'),
+          err: field.querySelector('.input-err'),
+          errMessages: [],
+
+          displayErrors: function () {
+            if (this.errMessages.length != 0) {
+              //Deleting old messages
+              this.err.innerHTML = '';
+
+              // Displaying the current err messages
+              this.errMessages.forEach(
+                (msg) => (this.err.innerHTML += `${msg} <br />`)
+              );
+              this.field.setAttribute('data-err', '');
+
+              // highlighting input
+              Array.from(this.inputs).forEach(
+                (input) => (input.style.borderColor = 'hsl(0, 100%, 66%)')
+              );
+            }
+          },
+        };
+      };
+
+      document.querySelector('#confirm-btn').addEventListener('click', () => {
+        event.preventDefault();
+
+        // Checking card holder's name
+        const cardHolderName = fieldElements('card-holder-name');
+        if (cardHolderName.inputs[0].value.trim() == '') {
+          cardHolderName.errMessages.push("Can't be blank");
+        }
+        cardHolderName.displayErrors();
+
+        // Checking errors in card number input box
+        const accnNumberField = fieldElements('card-number');
+
+        accnNumberField.inputs[0].value.trim() == ''
+          ? accnNumberField.errMessages.push("Can't be blank")
+          : {};
+
+        /[a-zA-Z]/g.test(accnNumberField.inputs[0].value)
+          ? accnNumberField.errMessages.push('Wrong format, numbers only')
+          : {};
+
+        accnNumberField.displayErrors();
+
+        // Checking errors in Exp Date input boxes
+        const extraNumbers = fieldElements('exp-date');
+
+        // extraNumbers.inputs[0].value.trim() === '' ||
+        // extraNumbers.inputs[0].value.trim()
+        //   ? extraNumbers.errMessages.push("Can't be blank")
+        //   : {};
+
+        // extraNumbers.displayErrors();
+
+        // Checking CVC input
+        const cvcField = fieldElements('cvc');
+        cvcField.inputs[0].value.trim() === ''
+          ? cvcField.errMessages.push("Can't be blank")
+          : {};
+
+        cvcField.displayErrors();
+
+        // Display the complete status
+        const noErrorsInFields = [
+          cardHolderName,
+          accnNumberField,
+          extraNumbers,
+          cvcField,
+        ]
+          .map((field) => field.errMessages.length > 0)
+          .every((bool) => bool === false);
+
+        if (noErrorsInFields) {
+        }
+      });
+    </script>
   </body>
 </html>

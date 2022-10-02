@@ -4,9 +4,19 @@
 $Colour-Purple: hsl(249, 99%, 64%);
 $Colour-Dark-Purple: hsl(278, 94%, 30%);
 $Colour-Linear-gradient: linear-gradient(
-  $Colour-Purple,
-  $Colour-Dark-Purple
+  90deg,
+  $Colour-Purple 0%,
+  $Colour-Dark-Purple 100%
 ); /* (active input border)*/
+// background: hsla(94, 100%, 70%, 1);
+
+// background: linear-gradient(90deg, hsla(94, 100%, 70%, 1) 0%, hsla(0, 100%, 77%, 1) 100%);
+
+// background: -moz-linear-gradient(90deg, hsla(94, 100%, 70%, 1) 0%, hsla(0, 100%, 77%, 1) 100%);
+
+// background: -webkit-linear-gradient(90deg, hsla(94, 100%, 70%, 1) 0%, hsla(0, 100%, 77%, 1) 100%);
+
+// filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A9FF68", endColorstr="#FF8989", GradientType=1 );
 $Colour-Red: hsl(0, 100%, 66%); /*input errors*/
 /* Neutral */
 $Colour-White: hsl(0, 0%, 100%);
@@ -139,13 +149,13 @@ body {
           padding: 14px;
 
           border-radius: $border-radius;
-          border: solid $Colour-Dark-grayish-violet 1px;
+          border: solid $Colour-Dark-grayish-violet 2px;
 
           color: $Colour-Very-dark-violet;
           font-family: $Font;
 
           &:focus {
-            border-color: $Colour-Linear-gradient;
+            border-color: $Colour-Dark-Purple;
             outline: none;
           }
 
@@ -167,6 +177,10 @@ body {
           font-size: 12px;
           letter-spacing: 1px;
           display: none;
+        }
+
+        &[data-err] .input-err {
+          display: block;
         }
       }
 
