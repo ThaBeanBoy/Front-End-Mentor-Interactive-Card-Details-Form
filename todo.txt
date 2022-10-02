@@ -1,7 +1,8 @@
 # TODO LIST
+<> Apply hover and active stylings
 <> Fix the height & width issue with the body
 <> Fix the gradient color
 <> Fix the view of the cards while they are in mobile view
 
-<> Format inputs
 <> Display errors for invalid inputs - Use JS and show errors after the user tries submiting
+<> Complete state

@@ -160,7 +160,7 @@ body .right form button {
 }
 
 body .right .attribution {
-  margin-top: 28px;
+  margin: 28px 0;
   font-size: 11px;
 }
 
@@ -185,6 +185,14 @@ body .right .attribution a {
   body .left {
     width: 100vw;
     height: auto;
+  }
+  body .left .cards {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 620px;
+    height: auto;
+    width: 100%;
   }
   body .left #left-bg {
     display: none;
