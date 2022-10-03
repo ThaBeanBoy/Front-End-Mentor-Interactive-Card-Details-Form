@@ -70,6 +70,7 @@
             type="text"
             name="card-number"
             placeholder="e.g. 1234 5678 9123 0000"
+            maxlength="19"
           />
           <p class="input-err"></p>
         </div>
@@ -78,15 +79,30 @@
           <div class="field" data-field-for="exp-date">
             <label for="card-details">Exp. Date (MM/YY)</label>
             <div class="double-input">
-              <input type="text" name="card-month" placeholder="MM" />
-              <input type="text" name="card-year" placeholder="YY" />
+              <input
+                type="text"
+                name="card-month"
+                placeholder="MM"
+                maxlength="2"
+              />
+              <input
+                type="text"
+                name="card-year"
+                placeholder="YY"
+                maxlength="2"
+              />
             </div>
             <p class="input-err"></p>
           </div>
 
           <div class="field" data-field-for="cvc">
             <label for="CVC">CVC</label>
-            <input type="text" name="CVC" placeholder="e.g. 123" />
+            <input
+              type="text"
+              name="CVC"
+              placeholder="e.g. 123"
+              maxlength="4"
+            />
             <p class="input-err"></p>
           </div>
         </div>
@@ -105,8 +121,10 @@
     <!-- Thank you! We've added your card details Continue -->
 
     <script>
+      const errColor = 'hsl(0, 100%, 66%)';
+      const normalBorderColor = '#8e8593';
+
       const fieldElements = (fieldName) => {
-        // const field = document.querySelector(fieldName);
         const field = document.querySelector(`[data-field-for="${fieldName}"]`);
 
         return {
@@ -116,7 +134,7 @@
           errMessages: [],
 
           displayErrors: function () {
-            if (this.errMessages.length != 0) {
+            if (this.errMessages.length > 0) {
               //Deleting old messages
               this.err.innerHTML = '';
 
@@ -128,8 +146,37 @@
 
               // highlighting input
               Array.from(this.inputs).forEach(
-                (input) => (input.style.borderColor = 'hsl(0, 100%, 66%)')
+                (input) => (input.style.borderColor = errColor)
               );
+            } else {
+              // There are no errors
+              this.field.removeAttribute('data-err');
+
+              // remove coloring
+              Array.from(this.inputs).forEach(
+                (input) => (input.style.borderColor = normalBorderColor)
+              );
+            }
+          },
+
+          validation: function (validationCase, errMessage, highjackDisplay) {
+            if (validationCase) {
+              this.errMessages.push(errMessage);
+            } else {
+              indexOfErrMessage = this.errMessages.indexOf(errMessage);
+              if (indexOfErrMessage >= 0) {
+                this.errMessages.splice(
+                  this.errMessages.indexOf(errMessage),
+                  1
+                );
+              }
+            }
+
+            if (highjackDisplay === undefined) {
+              this.displayErrors();
+            } else {
+              highjackDisplay();
+              console.log(this.errMessages);
             }
           },
         };
@@ -138,43 +185,78 @@
       document.querySelector('#confirm-btn').addEventListener('click', () => {
         event.preventDefault();
 
+        errBlankStatement = "Can't be blank";
+        errNumbersOnly = 'Wrong format, numbers only';
+
         // Checking card holder's name
         const cardHolderName = fieldElements('card-holder-name');
-        if (cardHolderName.inputs[0].value.trim() == '') {
-          cardHolderName.errMessages.push("Can't be blank");
-        }
-        cardHolderName.displayErrors();
+
+        cardHolderName.validation(
+          cardHolderName.inputs[0].value.trim() === '',
+          errBlankStatement
+        );
 
         // Checking errors in card number input box
         const accnNumberField = fieldElements('card-number');
 
-        accnNumberField.inputs[0].value.trim() == ''
-          ? accnNumberField.errMessages.push("Can't be blank")
-          : {};
+        accnNumberField.validation(
+          accnNumberField.inputs[0].value.trim() === '',
+          errBlankStatement
+        );
 
-        /[a-zA-Z]/g.test(accnNumberField.inputs[0].value)
-          ? accnNumberField.errMessages.push('Wrong format, numbers only')
-          : {};
-
-        accnNumberField.displayErrors();
+        accnNumberField.validation(
+          /[a-zA-Z]/g.test(accnNumberField.inputs[0].value.trim()),
+          errNumbersOnly
+        );
 
         // Checking errors in Exp Date input boxes
+        // ! displaying errors is done manually because the display method will highlight both input fields
         const extraNumbers = fieldElements('exp-date');
 
-        // extraNumbers.inputs[0].value.trim() === '' ||
-        // extraNumbers.inputs[0].value.trim()
-        //   ? extraNumbers.errMessages.push("Can't be blank")
-        //   : {};
+        extraNumbers.validation(
+          extraNumbers.inputs[0].value.trim() === '' ||
+            extraNumbers.inputs[1].value.trim() === '',
+          errBlankStatement,
+          () => {
+            console.log('Highjack2');
 
-        // extraNumbers.displayErrors();
+            // Checkig if first input is empty
+            extraNumbers.inputs[0].style.borderColor =
+              extraNumbers.inputs[0].value.trim() === ''
+                ? errColor
+                : normalBorderColor;
+
+            // Checkig if second input is empty
+            extraNumbers.inputs[1].style.borderColor =
+              extraNumbers.inputs[1].value.trim() === ''
+                ? errColor
+                : normalBorderColor;
+
+            //
+            if (extraNumbers.errMessages.length > 0) {
+              extraNumbers.errMessages.forEach(
+                (msg) => (extraNumbers.err.innerHTML += `${msg} <br />`)
+              );
+              extraNumbers.field.setAttribute('data-err', '');
+            } else {
+              console.log('Disappear!!!');
+              extraNumbers.field.removeAttribute('data-err');
+            }
+          }
+        );
 
         // Checking CVC input
         const cvcField = fieldElements('cvc');
-        cvcField.inputs[0].value.trim() === ''
-          ? cvcField.errMessages.push("Can't be blank")
-          : {};
 
-        cvcField.displayErrors();
+        cvcField.validation(
+          cvcField.inputs[0].value.trim() === '',
+          errBlankStatement
+        );
+
+        cvcField.validation(
+          /[a-zA-Z]/g.test(cvcField.inputs[0].value.trim()),
+          errNumbersOnly
+        );
 
         // Display the complete status
         const noErrorsInFields = [
