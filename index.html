@@ -108,22 +108,30 @@
         </div>
 
         <button id="confirm-btn">Confirm</button>
-
-        <div class="attribution">
-          Challenge by
-          <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
-            >Frontend Mentor</a
-          >. Coded by <a href="#">Your Name Here</a>.
-        </div>
       </form>
+
+      <div class="complete-state">
+        <img
+          src="./images/icon-complete.svg"
+          alt="transaction complete image"
+        />
+        <h2>Thank You!</h2>
+        <p>We've added your card details</p>
+
+        <button>Continue</button>
+      </div>
+
+      <div class="attribution">
+        Challenge by
+        <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+          >Frontend Mentor</a
+        >. Coded by <a href="#">Your Name Here</a>.
+      </div>
     </div>
 
     <!-- Thank you! We've added your card details Continue -->
 
     <script>
-      const errColor = 'hsl(0, 100%, 66%)';
-      const normalBorderColor = '#8e8593';
-
       const fieldElements = (fieldName) => {
         const field = document.querySelector(`[data-field-for="${fieldName}"]`);
 
@@ -176,11 +184,24 @@
               this.displayErrors();
             } else {
               highjackDisplay();
-              console.log(this.errMessages);
             }
           },
         };
       };
+
+      // Formating Card number input
+      CardNumberInput = fieldElements('card-number').inputs[0];
+      CardNumberInput.addEventListener('input', () => {
+        spacerLengthKeys = [4, 9, 14];
+        CardNumberInput.value += spacerLengthKeys.some(
+          (length) => length === CardNumberInput.value.length
+        )
+          ? ' '
+          : '';
+      });
+
+      const errColor = 'hsl(0, 100%, 66%)';
+      const normalBorderColor = '#8e8593';
 
       document.querySelector('#confirm-btn').addEventListener('click', () => {
         event.preventDefault();
@@ -210,41 +231,31 @@
         );
 
         // Checking errors in Exp Date input boxes
-        // ! displaying errors is done manually because the display method will highlight both input fields
         const extraNumbers = fieldElements('exp-date');
 
         extraNumbers.validation(
           extraNumbers.inputs[0].value.trim() === '' ||
             extraNumbers.inputs[1].value.trim() === '',
-          errBlankStatement,
-          () => {
-            console.log('Highjack2');
-
-            // Checkig if first input is empty
-            extraNumbers.inputs[0].style.borderColor =
-              extraNumbers.inputs[0].value.trim() === ''
-                ? errColor
-                : normalBorderColor;
-
-            // Checkig if second input is empty
-            extraNumbers.inputs[1].style.borderColor =
-              extraNumbers.inputs[1].value.trim() === ''
-                ? errColor
-                : normalBorderColor;
-
-            //
-            if (extraNumbers.errMessages.length > 0) {
-              extraNumbers.errMessages.forEach(
-                (msg) => (extraNumbers.err.innerHTML += `${msg} <br />`)
-              );
-              extraNumbers.field.setAttribute('data-err', '');
-            } else {
-              console.log('Disappear!!!');
-              extraNumbers.field.removeAttribute('data-err');
-            }
-          }
+          errBlankStatement
         );
 
+        extraNumbers.validation(
+          /[a-zA-Z]/g.test(extraNumbers.inputs[0].value.trim()) ||
+            /[a-zA-Z]/g.test(extraNumbers.inputs[1].value.trim()),
+          errNumbersOnly
+        );
+
+        if (extraNumbers.errMessages.length > 0) {
+          extraNumbers.err.innerHTML = '';
+          extraNumbers.errMessages.forEach(
+            (msg) => (extraNumbers.err.innerHTML += `${msg} <br />`)
+          );
+          extraNumbers.field.setAttribute('data-err', '');
+        } else {
+          extraNumbers.err.innerHTML = '';
+          extraNumbers.field.removeAttribute('data-err');
+        }
+        console.log(extraNumbers.errMessages);
         // Checking CVC input
         const cvcField = fieldElements('cvc');
 

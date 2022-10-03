@@ -124,14 +124,17 @@ body {
 
     position: relative;
 
-    form {
-      position: relative;
-      max-width: 380px;
-
+    form,
+    .complete-state {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       right: $card-spacing;
+      max-width: 380px;
+    }
+
+    form {
+      display: none;
 
       .field {
         width: 100%;
@@ -205,6 +208,14 @@ body {
         color: $Colour-White;
       }
     }
+
+    .complete-state {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .attribution {
       margin: 28px 0;
       font-size: 11px;
@@ -224,7 +235,8 @@ body {
     }
 
     .right {
-      form {
+      form,
+      .complete-state {
         right: 463px - 420px !important;
       }
     }
@@ -307,7 +319,8 @@ body {
       height: auto;
       margin-top: $card-overflow-height + 48px;
 
-      form {
+      form,
+      .complete-state {
         padding: 0 16px;
         width: 100%;
         position: static;

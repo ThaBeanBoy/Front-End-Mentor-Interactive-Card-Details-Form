@@ -85,13 +85,17 @@ body .right {
   position: relative;
 }
 
-body .right form {
-  position: relative;
-  max-width: 380px;
+body .right form,
+body .right .complete-state {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   right: 164px;
+  max-width: 380px;
+}
+
+body .right form {
+  display: none;
 }
 
 body .right form .field {
@@ -163,6 +167,13 @@ body .right form button {
   color: white;
 }
 
+body .right .complete-state {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 body .right .attribution {
   margin: 28px 0;
   font-size: 11px;
@@ -176,7 +187,8 @@ body .right .attribution a {
   body .left .dummy-card {
     left: 43px !important;
   }
-  body .right form {
+  body .right form,
+  body .right .complete-state {
     right: 43px !important;
   }
 }
@@ -244,13 +256,15 @@ body .right .attribution a {
     height: auto;
     margin-top: 92px;
   }
-  body .right form {
+  body .right form,
+  body .right .complete-state {
     padding: 0 16px;
     width: 100%;
     position: static;
     transform: none;
   }
-  body .right form .field label {
+  body .right form .field label,
+  body .right .complete-state .field label {
     font-size: 12px;
   }
 }
