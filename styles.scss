@@ -39,6 +39,19 @@ $Font: 'Space Grotesk', sans-serif;
 $screen-1412: 1412px;
 $screen-1105: 1105px;
 
+.btn {
+  padding: 16px 0px;
+  width: 100%;
+  border-radius: $border-radius;
+  border: none;
+  cursor: pointer;
+  background-color: $Colour-Very-dark-violet;
+
+  font-family: $Font;
+  font-size: 18px;
+  color: $Colour-White;
+}
+
 body {
   width: 100vw;
   min-height: 100vh;
@@ -65,8 +78,14 @@ body {
       color: $Colour-White;
     }
 
+    .cards {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
     #card-front {
-      top: 187px;
+      bottom: 16px;
       left: $card-spacing;
 
       .card-container {
@@ -103,7 +122,7 @@ body {
     }
 
     #card-back {
-      top: 469px;
+      // top: 469px;
       left: 258px;
     }
 
@@ -134,7 +153,7 @@ body {
     }
 
     form {
-      display: none;
+      // display: none;
 
       .field {
         width: 100%;
@@ -194,26 +213,26 @@ body {
           margin-right: 20px;
         }
       }
-
-      button {
-        padding: 16px 0px;
-        width: 100%;
-        border-radius: $border-radius;
-        border: none;
-        cursor: pointer;
-        background-color: $Colour-Very-dark-violet;
-
-        font-family: $Font;
-        font-size: 18px;
-        color: $Colour-White;
-      }
     }
 
     .complete-state {
       width: 100%;
-      display: flex;
+      display: none;
       flex-direction: column;
       align-items: center;
+
+      img {
+        margin-bottom: 32px;
+      }
+
+      h2 {
+        margin-bottom: 28px;
+      }
+
+      p {
+        margin-bottom: 42px;
+        color: $Colour-Dark-grayish-violet;
+      }
     }
 
     .attribution {
@@ -277,8 +296,14 @@ body {
 
       $card-offset: 56px;
 
+      .cards {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+      }
+
       #card-front {
-        top: auto;
         bottom: -$card-overflow-height;
         left: 16px;
         // transform: translateX(-50%);

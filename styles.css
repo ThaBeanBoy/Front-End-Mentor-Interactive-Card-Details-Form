@@ -9,6 +9,18 @@
   box-sizing: border-box;
 }
 
+.btn {
+  padding: 16px 0px;
+  width: 100%;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  background-color: #21092f;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 18px;
+  color: white;
+}
+
 body {
   width: 100vw;
   min-height: 100vh;
@@ -35,8 +47,14 @@ body .left .dummy-card {
   color: white;
 }
 
+body .left .cards {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 body .left #card-front {
-  top: 187px;
+  bottom: 16px;
   left: 164px;
 }
 
@@ -71,7 +89,6 @@ body .left #card-front .card-container .bottom-of-card p {
 }
 
 body .left #card-back {
-  top: 469px;
   left: 258px;
 }
 
@@ -92,10 +109,6 @@ body .right .complete-state {
   transform: translateY(-50%);
   right: 164px;
   max-width: 380px;
-}
-
-body .right form {
-  display: none;
 }
 
 body .right form .field {
@@ -155,23 +168,24 @@ body .right form .extra-numbers .field:first-of-type {
   margin-right: 20px;
 }
 
-body .right form button {
-  padding: 16px 0px;
-  width: 100%;
-  border-radius: 7px;
-  border: none;
-  cursor: pointer;
-  background-color: #21092f;
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 18px;
-  color: white;
-}
-
 body .right .complete-state {
   width: 100%;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
+}
+
+body .right .complete-state img {
+  margin-bottom: 32px;
+}
+
+body .right .complete-state h2 {
+  margin-bottom: 28px;
+}
+
+body .right .complete-state p {
+  margin-bottom: 42px;
+  color: #8e8593;
 }
 
 body .right .attribution {
@@ -223,8 +237,13 @@ body .right .attribution a {
   body .left .dummy-card img:not(#card-logo) {
     width: 100%;
   }
+  body .left .cards {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+  }
   body .left #card-front {
-    top: auto;
     bottom: -44px;
     left: 16px;
     height: auto;
