@@ -26,11 +26,11 @@
         alt="cards background"
       />
 
-      <img
+      <!-- <img
         id="left-bg-mobile"
         src="./images/bg-main-mobile.png"
         alt="bg main mobile"
-      />
+      /> -->
       <div class="cards">
         <div id="card-front" class="dummy-card">
           <img src="./images/bg-card-front.png" alt="card-front" />
@@ -287,6 +287,11 @@
           .every((bool) => bool === false);
 
         if (noErrorsInFields) {
+          const form = document.querySelector('form');
+          const completeStatus = document.querySelector('.complete-state');
+
+          form.style.display = 'none';
+          completeStatus.style.display = 'flex';
         }
       });
     </script>

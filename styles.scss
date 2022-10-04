@@ -267,7 +267,10 @@ body {
 
     .left {
       width: 100vw;
-      height: auto;
+      height: 240px;
+      background-image: url(./images/bg-main-mobile.png);
+      background-color: $Colour-Purple;
+      background-size: cover;
 
       .cards {
         position: absolute;

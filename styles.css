@@ -214,7 +214,10 @@ body .right .attribution a {
   }
   body .left {
     width: 100vw;
-    height: auto;
+    height: 240px;
+    background-image: url(./images/bg-main-mobile.png);
+    background-color: #6448fe;
+    background-size: cover;
   }
   body .left .cards {
     position: absolute;
