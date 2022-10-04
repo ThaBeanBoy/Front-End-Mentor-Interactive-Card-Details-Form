@@ -1,22 +1,22 @@
 # Frontend Mentor - Interactive card details form solution
 
-This is a solution to the [Interactive card details form challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/interactive-card-details-form-XpS8cKZDWw). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+This is a solution to the [Interactive card details form challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/interactive-card-details-form-XpS8cKZDWw). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
 ## Table of contents
 
-- [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
-- [Author](#author)
-- [Acknowledgments](#acknowledgments)
-
-**Note: Delete this note and update the table of contents based on what sections you keep.**
+- [Frontend Mentor - Interactive card details form solution](#frontend-mentor---interactive-card-details-form-solution)
+  - [Table of contents](#table-of-contents)
+  - [Overview](#overview)
+    - [The challenge](#the-challenge)
+    - [Screenshot](#screenshot)
+    - [Links](#links)
+  - [My process](#my-process)
+    - [Built with](#built-with)
+    - [What I learned](#what-i-learned)
+    - [Continued development](#continued-development)
+    - [Useful resources](#useful-resources)
+  - [Author](#author)
+  - [Acknowledgments](#acknowledgments)
 
 ## Overview
 
@@ -33,20 +33,12 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
-
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+![](./screenshot.png)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- [Repo](https://github.com/ThaBeanBoy/Front-End-Mentor-Interactive-Card-Details-Form)
+- [Live Site](https://thabeanboy.github.io/Front-End-Mentor-Interactive-Card-Details-Form/)
 
 ## My process
 
@@ -56,31 +48,73 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 - CSS custom properties
 - Flexbox
 - CSS Grid
-- Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- Desktop-first workflow
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+Throughout the development of this project, one thing that never occured to me was that you could use querySelector with any html object in Js. This made things easier in when working with the DOM.
 
-To see how you can add code snippets, see below:
-
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
 ```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
+const field = document.querySelector(`[data-field-for="${fieldName}"]`);
+const inputElement = field.getElementsByTagName('input');
+```
+
+When trying to perform form validation, the amount of code I wrote eventually became too cumbersome. What was interesting was that alot of that cumbersome code was jast a repetition of the previous code with very little change in it. I decided it would be easier to encapsulate all this logic in a field object that can perform input validation based on the values I pass into it's parameters.
+
+```js
+const fieldElements = (fieldName) => {
+  const field = document.querySelector(`[data-field-for="${fieldName}"]`);
+
+  return {
+    field: field,
+    inputs: field.getElementsByTagName('input'),
+    err: field.querySelector('.input-err'),
+    errMessages: [],
+
+    displayErrors: function () {
+      if (this.errMessages.length > 0) {
+        //Deleting old messages
+        this.err.innerHTML = '';
+
+        // Displaying the current err messages
+        this.errMessages.forEach(
+          (msg) => (this.err.innerHTML += `${msg} <br />`)
+        );
+        this.field.setAttribute('data-err', '');
+
+        // highlighting input
+        Array.from(this.inputs).forEach(
+          (input) => (input.style.borderColor = errColor)
+        );
+      } else {
+        // There are no errors
+        this.field.removeAttribute('data-err');
+
+        // remove coloring
+        Array.from(this.inputs).forEach(
+          (input) => (input.style.borderColor = normalBorderColor)
+        );
+      }
+    },
+
+    validation: function (validationCase, errMessage, highjackDisplay) {
+      if (validationCase) {
+        this.errMessages.push(errMessage);
+      } else {
+        indexOfErrMessage = this.errMessages.indexOf(errMessage);
+        if (indexOfErrMessage >= 0) {
+          this.errMessages.splice(this.errMessages.indexOf(errMessage), 1);
+        }
+      }
+
+      if (highjackDisplay === undefined) {
+        this.displayErrors();
+      } else {
+        highjackDisplay();
+      }
+    },
+  };
+};
 ```
 
 If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
