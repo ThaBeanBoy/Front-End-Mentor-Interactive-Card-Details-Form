@@ -207,8 +207,8 @@
       document.querySelector('#confirm-btn').addEventListener('click', () => {
         event.preventDefault();
 
-        errBlankStatement = "Can't be blank";
-        errNumbersOnly = 'Wrong format, numbers only';
+        const errBlankStatement = "Can't be blank";
+        const errNumbersOnly = 'Wrong format, numbers only';
 
         // Checking card holder's name
         const cardHolderName = fieldElements('card-holder-name');

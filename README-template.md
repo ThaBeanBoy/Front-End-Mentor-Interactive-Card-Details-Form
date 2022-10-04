@@ -16,7 +16,6 @@ This is a solution to the [Interactive card details form challenge on Frontend M
     - [Continued development](#continued-development)
     - [Useful resources](#useful-resources)
   - [Author](#author)
-  - [Acknowledgments](#acknowledgments)
 
 ## Overview
 
@@ -117,33 +116,139 @@ const fieldElements = (fieldName) => {
 };
 ```
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
+Throug the use of the objects, validating the form was easier. The only issue was the Exp. Date (MM/YY) inputs, if one input field from field has an error, both the inputs' border color are changed to the error color.
 
-**Note: Delete this note and the content within this section and replace with your own learnings.**
+```js
+CardNumberInput = fieldElements('card-number').inputs[0];
+CardNumberInput.addEventListener('input', () => {
+  spacerLengthKeys = [4, 9, 14];
+  CardNumberInput.value += spacerLengthKeys.some(
+    (length) => length === CardNumberInput.value.length
+  )
+    ? ' '
+    : '';
+});
+
+const errColor = 'hsl(0, 100%, 66%)';
+const normalBorderColor = '#8e8593';
+
+document.querySelector('#confirm-btn').addEventListener('click', () => {
+  event.preventDefault();
+
+  const errBlankStatement = "Can't be blank";
+  const errNumbersOnly = 'Wrong format, numbers only';
+
+  // Checking card holder's name
+  const cardHolderName = fieldElements('card-holder-name');
+
+  cardHolderName.validation(
+    cardHolderName.inputs[0].value.trim() === '',
+    errBlankStatement
+  );
+
+  // Checking errors in card number input box
+  const accnNumberField = fieldElements('card-number');
+
+  accnNumberField.validation(
+    accnNumberField.inputs[0].value.trim() === '',
+    errBlankStatement
+  );
+
+  accnNumberField.validation(
+    /[a-zA-Z]/g.test(accnNumberField.inputs[0].value.trim()),
+    errNumbersOnly
+  );
+
+  // Checking errors in Exp Date input boxes
+  const extraNumbers = fieldElements('exp-date');
+
+  extraNumbers.validation(
+    extraNumbers.inputs[0].value.trim() === '' ||
+      extraNumbers.inputs[1].value.trim() === '',
+    errBlankStatement
+  );
+
+  extraNumbers.validation(
+    /[a-zA-Z]/g.test(extraNumbers.inputs[0].value.trim()) ||
+      /[a-zA-Z]/g.test(extraNumbers.inputs[1].value.trim()),
+    errNumbersOnly
+  );
+
+  if (extraNumbers.errMessages.length > 0) {
+    extraNumbers.err.innerHTML = '';
+    extraNumbers.errMessages.forEach(
+      (msg) => (extraNumbers.err.innerHTML += `${msg} <br />`)
+    );
+    extraNumbers.field.setAttribute('data-err', '');
+  } else {
+    extraNumbers.err.innerHTML = '';
+    extraNumbers.field.removeAttribute('data-err');
+  }
+  console.log(extraNumbers.errMessages);
+  // Checking CVC input
+  const cvcField = fieldElements('cvc');
+
+  cvcField.validation(
+    cvcField.inputs[0].value.trim() === '',
+    errBlankStatement
+  );
+
+  cvcField.validation(
+    /[a-zA-Z]/g.test(cvcField.inputs[0].value.trim()),
+    errNumbersOnly
+  );
+
+  // Display the complete status
+  const noErrorsInFields = [
+    cardHolderName,
+    accnNumberField,
+    extraNumbers,
+    cvcField,
+  ]
+    .map((field) => field.errMessages.length > 0)
+    .every((bool) => bool === false);
+
+  if (noErrorsInFields) {
+    const form = document.querySelector('form');
+    const completeStatus = document.querySelector('.complete-state');
+
+    form.style.display = 'none';
+    completeStatus.style.display = 'flex';
+  }
+});
+```
+
+A cool thing I like doing is using array methods. To detect if the were no errors in the form, I had to do the following :
+
+1. Put all the field objects in an array
+2. Map the array to an array of booleans, these booleans are a reflection of the number of error messages in the error messages array. If the number of error messages is greater than 0, that means that there are errors.
+3. If every boolean value from the array is a false, that means that there were no errors, & the succesful complete state con be shown.
+
+```js
+const noErrorsInFields = [
+  cardHolderName,
+  accnNumberField,
+  extraNumbers,
+  cvcField,
+]
+  .map((field) => field.errMessages.length > 0)
+  .every((bool) => bool === false);
+
+if (noErrorsInFields) {
+  // Done state can be showed
+}
+```
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+One thing I would love to improve upon is using HTML Lnadmark tags, like [@AdrianoEscarabote]() suggested in a previous project.
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+- [Coolors Gradient Maker](https://coolors.co/gradient-maker/f1e1c2-fcbc98) - This helped me make gradients.
 
 ## Author
 
 - Website - [Add your name here](https://www.your-site.com)
 - Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
 - Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
